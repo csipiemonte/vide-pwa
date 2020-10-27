@@ -1,0 +1,53 @@
+//font
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
+
+// font size
+$font-size-base: 1rem; // Assumes the browser default, typically `16px`
+$font-size-standard:18px;
+
+$font-size-minimo:12px;
+
+//Titoli
+//$font-size-h1: 40px;
+$font-size-h1: 18px;
+$font-size-h1-title-service: 28px;
+$font-size-h1-title-servicehome: 40px;
+$font-size-h2: 30px;
+$font-size-h3: 32px;
+$font-size-h4: 23px;
+$font-size-h5: 21px;
+$font-size-h6: $font-size-standard;
+
+$p-font-size: $font-size-standard; // anche la citazione, x loro h7
+//basic
+$font-size-extra-small: $font-size-minimo;
+
+$font-size-extra-medium: 21px;
+$font-size-medium: 23px;
+$font-size-notes: 14px;
+$font-size-large: 70px;
+$font-size-extra-large: 120px;
+
+$h1-banner-font-size:70px;
+
+$p-font-size: $font-size-standard; // anche la citazione, x loro h7
+$font-size-small: 16px;
+$font-size-extra-small: $font-size-minimo;
+$font-size-button:$font-size-small;
+
+// font size btn
+$font-size-btn-small: 12px;
+$font-size-btn-medium: 14px;
+$font-size-btn-large: 20px;
+
+// font weight
+$font-weight-lighter:         lighter !default;
+$font-weight-light:           300 !default;
+$font-weight-normal:          400 !default;
+$font-weight-semibold:        600;
+$font-weight-bold:            700 !default;
+$font-weight-bolder:          bolder !default;
+$font-weight-base: $font-weight-normal;
+
+$font-family: 'Titillium Web', sans-serif;

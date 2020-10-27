@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- Set the apple-mobile-web-app-capable meta tag to yes to turn on standalone mode. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+  <!-- On iOS, you can specify a web application title for the launch icon. -->
+  <meta name="apple-mobile-web-app-title" content="VIDE, Your Virtual Desk">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>VIrtual DEsk</title>
+  <!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
+    rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but VIrtualDEsk doesn't work properly without JavaScript enabled. Please enable
+      it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Symbol "></script>
+  <!--script src="https://meet.jit.si/external_api.js"></script-->
+  <script src="https://<%= VUE_APP_CONFERENCE_URL_DOMAIN %>/libs/external_api.min.js"></script>
+</body>
+
+</html>
