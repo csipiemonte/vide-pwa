@@ -26,19 +26,39 @@
             <strong>{{ formatHour(appointment.begin_date) }}</strong
             >.
           </p>
-          <p>
+          <p v-if="appointment.status == CONFIRMED_STATUS">
             Potrai iniziare la videochiamata appena il pulsante sottostante sarà
-            attivo.
+            attivo.<br />
+            Per ingannare l'attesa puoi verificare che il tuo dispositivo sia
+            correttamente configurato facendo click
+            <a @click="modalMedia = true">qui</a>.
+            <UserMedia
+              ref="userMedia"
+              v-if="modalMedia"
+              v-on:closecard="modalMedia = false"
+            />
           </p>
-          <div class="text-center" v-if="progressCircularOn">
+          <div
+            class="text-center"
+            v-if="progressCircularOn && appointment.status == CONFIRMED_STATUS"
+          >
             <v-progress-circular
               indeterminate
               :size="50"
               color="primary"
             ></v-progress-circular>
           </div>
-          <p v-if="progressCircularOn" class="progressCircularText">
+          <p
+            v-if="progressCircularOn && appointment.status == CONFIRMED_STATUS"
+            class="progressCircularText"
+          >
             Ancora pochi minuti e ti sarà possibile iniziare la videochiamata.
+          </p>
+          <p
+            v-if="appointment.status == OPEN_STATUS"
+            class="progressCircularText"
+          >
+            Clicca sul bottone qui sotto per iniziare la videochiamata.
           </p>
         </div>
         <v-btn
@@ -111,6 +131,7 @@ import moment from "moment-timezone";
 import { CHECK_START_FREQ } from "@/common/config";
 import ErrorBox from "@/components/layout/ErrorBox";
 import Spinner from "@/components/layout/Spinner";
+import UserMedia from "@/components/user/UserMedia";
 import store from "@/store";
 import { mapGetters } from "vuex";
 import {
@@ -128,11 +149,13 @@ export default {
       carouselItems: [],
       detailError: { message: "", title: "" },
       isLoading: false,
+      modalMedia: false,
+      modalMediaFirstTime: false,
       CONFIRMED_STATUS: APPOINTMENT_CONFIRMED,
       OPEN_STATUS: APPOINTMENT_OPEN
     };
   },
-  components: { ErrorBox, Spinner },
+  components: { ErrorBox, Spinner, UserMedia },
   computed: {
     ...mapGetters(["appointment"]),
     descrClosedAppointment() {
@@ -155,6 +178,7 @@ export default {
       };
       inputParams.appointmentId = this.appointmentId;
       this.isLoading = true;
+
       store
         .dispatch(APPOINTMENT_FETCH, inputParams)
         .then(() => {
@@ -217,6 +241,11 @@ export default {
         .catch(error => {
           this.isLoading = false;
         });
+    },
+    openUserMediaModal() {
+      this.modalMedia = true;
+      if (!this.modalMediaFirstTime) this.$refs.userMedia.playAudioVideo();
+      this.modalMediaFirstTime = false;
     }
   },
   async mounted() {

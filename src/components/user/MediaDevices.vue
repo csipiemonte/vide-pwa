@@ -21,10 +21,10 @@
 
 <script>
 export default {
-  name: "Camera",
+  name: "MediaDevices",
   props: {
     video: { type: Boolean, required: false, default: true },
-    audio: { type: Boolean, required: false, default: false }
+    audio: { type: Boolean, required: false, default: true }
   },
   data() {
     return {
@@ -32,7 +32,7 @@ export default {
     };
   },
   methods: {
-    async playVideo() {
+    async playAudioVideo() {
       try {
         this.stream = await navigator.mediaDevices.getUserMedia({
           video: {
@@ -43,39 +43,25 @@ export default {
 
         this.$refs.video.srcObject = this.stream;
         this.$refs.video.play();
+        this.$emit("updateboxsucc", {
+          title: "Tutto OK!",
+          message:
+            "Fotocamera e microfono correttamente attivati. Puoi fare click su CHIUDI e attendere che il bottone INIZIA LA VIDEOCHIAMATA diventi blu."
+        });
       } catch (error) {
         // cfr. https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
         this.$emit("updateboxerr", {
           title: "Errore",
           message:
-            "Problemi occorsi durante l'attivazione della fotocamera. " +
-            'Per poter utilizzare la funzionalità "Scatta una foto" è necessario permettere l\'accesso alla fotocamera.'
+            "Problemi occorsi durante l'attivazione della fotocamera e del microfono. " +
+            "Per poter utilizzare il servizio di videoconferenza è necessario permettere l'accesso alla fotocamera e al microfono: per rimuovere il blocco cliccare sulle icone di videocamera e microfono poste prima dell'indirizzo del sito, ricaricare la pagina, ripetere la prova di attivazione e in ultimo fare click su Consenti quando richiesto dalla pagina."
         });
       }
-    },
-
-    takeAPhoto() {
-      const video = this.$refs.video;
-      const canvas = this.$refs.canvas;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const context = canvas.getContext("2d");
-      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-      return canvas;
-    },
-
-    clearPhoto() {
-      const canvas = this.$refs.canvas;
-      const context = canvas.getContext("2d");
-      // context.fillStyle = "#AAA";
-      // context.fillRect(0, 0, canvas.width, canvas.height);
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      return canvas.toDataURL("image/png");
     }
   },
 
   async mounted() {
-    this.playVideo();
+    this.playAudioVideo();
   },
 
   async beforeDestroy() {

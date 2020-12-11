@@ -78,8 +78,10 @@ export default {
     hideModalPhoto() {
       this.$refs.camera.clearPhoto();
       this.$refs.camera.$refs.video.pause();
-      const tracks = this.$refs.camera.stream.getTracks();
-      tracks.forEach(track => track.stop());
+      if (this.$refs.camera.stream != undefined) {
+        const tracks = this.$refs.camera.stream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
       this.modalPhoto = false;
       this.$emit("undofile");
     },
@@ -123,9 +125,12 @@ export default {
       this.detailError = detErr;
     },
     closeDialog() {
+      this.$refs.camera.clearPhoto();
       this.$refs.camera.$refs.video.pause();
-      const tracks = this.$refs.camera.stream.getTracks();
-      tracks.forEach(track => track.stop());
+      if (this.$refs.camera.stream != undefined) {
+        const tracks = this.$refs.camera.stream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
       this.modalPhoto = false;
       return this.modalPhoto;
     }

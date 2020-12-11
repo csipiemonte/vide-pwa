@@ -71,10 +71,16 @@ export default {
           // Rimossi da conf originaria: "sharedvideo" (Condividi un video Youtube),
           // "recording" (Inizia a registrare), "livestreaming" (Inizia una diretta),
           // "videobackgroundblur" (Offusca il video), "mute-everyone", "stats" (Statistiche)
-          // "shortcuts" (Scorciatoie), "raisehand", (alza la mano),  "fullscreen" (schermo intero)
+          // "shortcuts" (Scorciatoie), "raisehand", (alza la mano),
           // "settings" (Impostazioni), "videoquality" (Gestione qualita video)
           // "e2ee" (end to end encryption), "profile" (profilo), "desktop" (condivisione schermo)
-          TOOLBAR_BUTTONS: ["chat", "desktop", "settings", "videoquality"],
+          TOOLBAR_BUTTONS: [
+            "chat",
+            "desktop",
+            "settings",
+            "videoquality",
+            "fullscreen"
+          ],
           filmStripOnly: false // se mostrare solamente il filmstrip (e nascondere la toolbar).
           // A html text to be shown to guests on the close page, false disables it
         },

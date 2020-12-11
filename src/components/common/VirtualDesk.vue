@@ -20,6 +20,25 @@
                   <v-icon class="iconClock">mdi-clock</v-icon> {{ time }}
                 </p>
               </v-col>
+              <!-- FAQ BUTTON -->
+              <!-- <v-col cols="12" sm="1" class="col-btn">
+                <v-btn
+                  class="mx-md-2"
+                  @click="goFaq()"
+                  fab
+                  large
+                  id="goFaq"
+                  color="white"
+                >
+                  <v-icon>mdi-help</v-icon>
+                </v-btn>
+                <label
+                  for="goFaq"
+                  class="d-block"
+                >
+                  FAQ
+                </label>
+              </v-col> -->
               <v-spacer></v-spacer>
               <v-col cols="12" sm="auto" class="col-btn">
                 <v-row justify="center">
@@ -217,6 +236,31 @@
                               >
                             </v-list-item-content>
                           </v-list-item>
+                          <!-- prova registrazione -->
+                          <!-- v-list-item @click="startRec()">
+                            <v-list-item-content>
+                              <v-list-item-title
+                                class="d-block font-weight-bold"
+                                >Inizia registrazione</v-list-item-title
+                              >
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item @click="stopRec()">
+                            <v-list-item-content>
+                              <v-list-item-title
+                                class="d-block font-weight-bold"
+                                >Stop registrazione</v-list-item-title
+                              >
+                            </v-list-item-content>
+                          </v-list-item>
+                          <v-list-item @click="downloadRecordedVideo()">
+                            <v-list-item-content>
+                              <v-list-item-title
+                                class="d-block font-weight-bold"
+                                >Download registrazione</v-list-item-title
+                              >
+                            </v-list-item-content>
+                          </v-list-item-->
                         </v-list-item-group>
                       </v-list>
                     </v-menu>
@@ -260,6 +304,7 @@
       v-on:loadpicture="uploadPicture()"
     />
     <Spinner :pOverlay="isLoading" />
+    <!--video id="preview" autoplay></video--><!-- spostare in una API modale -->
   </div>
 </template>
 
@@ -270,6 +315,7 @@ import JitsiStream from "@/components/common/jitsi/JitsiStream";
 import Spinner from "@/components/layout/Spinner";
 import { ATTACHMENT_UPLOAD } from "@/store/actions.type";
 import { mapGetters } from "vuex";
+import { saveAs } from "file-saver";
 
 export default {
   name: "VirtualDesk",
@@ -312,6 +358,9 @@ export default {
         file: null
       },
       modalPhotoFirstTime: true,
+      recordedData: [],
+      recorder: null,
+      recordStream: null,
       uploadFileError: null,
       uploadFileDrawer: false,
       time: ""
@@ -349,6 +398,40 @@ export default {
       this.$refs.picture.modalPhoto = true;
       if (!this.modalPhotoFirstTime) this.$refs.picture.playVideo();
       this.modalPhotoFirstTime = false;
+    },
+    downloadRecordedVideo() {
+      const rd = this.recordedData;
+      console.log("rd: ", { rd });
+      const recordedBlob = new Blob(rd, {
+        type: "video/webm"
+      });
+      saveAs(recordedBlob, "RecordedVideo.webm");
+    },
+    stopRec() {
+      if (this.recorder.state == "recording") this.recorder.stop();
+      this.recordStream.getTracks().forEach(track => track.stop());
+    },
+    async startRec(stream) {
+      const jitsiIframe = document.getElementById("jitsiConferenceFrame0");
+      let largeVideo = jitsiIframe.contentWindow.document.getElementById(
+        "largeVideo"
+      );
+
+      const style = largeVideo.getAttribute("style");
+      console.log("style: " + style);
+      // preview.srcObject = stream;
+      largeVideo.captureStream =
+        largeVideo.captureStream || largeVideo.mozCaptureStream;
+      // preview.play();
+
+      this.recordStream = largeVideo.captureStream();
+      const rs = this.recordStream;
+      console.log("recordStream: ", { rs });
+
+      this.recorder = new MediaRecorder(this.recordStream);
+      this.recorder.ondataavailable = event =>
+        this.recordedData.push(event.data);
+      this.recorder.start();
     },
     uploadPicture() {
       const upFile = this.mForm.file;

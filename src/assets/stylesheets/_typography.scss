@@ -34,6 +34,7 @@ $h1-banner-font-size:70px;
 $p-font-size: $font-size-standard; // anche la citazione, x loro h7
 $font-size-small: 16px;
 $font-size-extra-small: $font-size-minimo;
+
 $font-size-button:$font-size-small;
 
 // font size btn
@@ -42,12 +43,15 @@ $font-size-btn-medium: 14px;
 $font-size-btn-large: 20px;
 
 // font weight
+
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
 $font-weight-normal:          400 !default;
 $font-weight-semibold:        600;
 $font-weight-bold:            700 !default;
 $font-weight-bolder:          bolder !default;
+
 $font-weight-base: $font-weight-normal;
 
 $font-family: 'Titillium Web', sans-serif;
+

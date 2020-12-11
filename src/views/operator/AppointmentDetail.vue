@@ -176,6 +176,7 @@
 <script>
 import moment from "moment-timezone";
 import { mapGetters } from "vuex";
+import { saveAs } from "file-saver";
 import {
   APPOINTMENT_CONFIRMED,
   APPOINTMENT_OPEN,
@@ -188,7 +189,11 @@ import { getHostname } from "@/common/utils";
 import ErrorBox from "@/components/layout/ErrorBox";
 import Spinner from "@/components/layout/Spinner";
 import store from "@/store";
-import { APPOINTMENT_FETCH, ATTACHMENTS_FETCH } from "@/store/actions.type";
+import {
+  APPOINTMENT_FETCH,
+  ATTACHMENT_DOWNLOAD,
+  ATTACHMENTS_FETCH
+} from "@/store/actions.type";
 
 export default {
   name: "AppointmentDetail",

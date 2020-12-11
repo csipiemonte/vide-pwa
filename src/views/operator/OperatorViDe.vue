@@ -79,6 +79,10 @@ export default {
         });
     },
     openAppointment() {
+      if (this.appointment.status == APPOINTMENT_OPEN) {
+        this.isLoading = false;
+        return;
+      }
       store
         .dispatch(APPOINTMENT_UPDATE, {
           slug: this.appointment.appointment_id,

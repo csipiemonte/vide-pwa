@@ -31,6 +31,26 @@ Per predisporre il progetto ed avviare il server in locale, mandare in esecuzion
 >#### per avviare il server locale su localhost:8080
 >``` npm run serve```
 
+## End to end tests
+L'esecuzione automatica dei test funziona **solamente** con i seguenti prerequisiti:
+ - Java(TM) SE Runtime Environment (build 1.8.0_211-b12) Java HotSpot(TM) 64-Bit Server
+ - Google Chrome Versione 87.0.4280.66 (Build ufficiale) (a 64 bit)
+ - @vue/cli-plugin-e2e-nightwatch v. 4.5.9"
+ - chromedriver v. 87.0.2
+ - dare OK all'accesso esecuzione Java nelle reti pubbliche e private
+ - non avere un precedente processo di chrome (chromedriver.exe) in stato zombie e quindi non terminato (cfr. Gestione attività)
+
+Ogni modifica di versione ai componenti elencati deve essere testata. Per ottenere il CSS selector: in Google Chrome fare click con il tasto destro sull'elemento di cui si desidera conoscere il selector, poi click su Ispeziona che apre la barra dello sviluppatore. All'interno di quest'ultima, click con il tasto destro sull'elemento ispezionato e poi Copy -> Copy selector.
+
+Prima di eseguire i test, avviare il json-server con:
+``` bash
+> npm run serve
+```
+In un'altra finestra di Node.js, mandare in esecuzione i test automatizzati con:
+``` bash
+> npm run test
+```
+
 ## Coding style tests
 Mandare in esecuzione il comando:
 > ```npm run lint```
